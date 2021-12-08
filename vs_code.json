@@ -1,0 +1,88 @@
+{
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.startupEditor": "welcomePage",
+    "workbench.settings.editor": "json",
+    "workbench.settings.openDefaultSettings": true,
+    "workbench.colorCustomizations": {
+        "[Gruvbox Material Dark]": {
+            "tab.activeBackground": "#1D2021",
+            "tab.inactiveBackground": "#292828",
+            "activityBar.background": "#1D2021",
+            "sideBar.background": "#1D2021",
+            "sideBar.border": "#292828",
+            "editor.background": "#1D2021",
+            "statusBar.background": "#1D2021",
+            "terminal.background": "#1D2021"
+        }
+    },
+    "editor.fontSize": 15,
+    "editor.fontWeight": "500",
+    "editor.fontFamily": "JetBrains Mono, Consolas, 'Courier New', monospace",
+    "debug.console.fontSize": 14,
+    "debug.console.fontFamily": "JetBrains Mono, Consolas, 'Courier New', monospace",
+    "terminal.integrated.fontSize": 14,
+    "terminal.integrated.fontWeight": "550",
+    "editor.lineNumbers": "relative",
+    "editor.wordWrap": "off",
+    "editor.quickSuggestionsDelay": 15,
+    "zenMode.centerLayout": false,
+    "zenMode.fullScreen": true,
+    "zenMode.hideLineNumbers": false,
+    "zenMode.hideTabs": false,
+    "zenMode.hideActivityBar": true,
+    "zenMode.hideStatusBar": false,
+    "editor.tokenColorCustomizations": {
+        "textMateRules": [
+            {
+                "name": "Comment",
+                "scope": [
+                    "comment",
+                    "comment.block",
+                    "comment.block.documentation",
+                    "comment.line",
+                    "comment.line.double-slash",
+                    "punctuation.definition.comment",
+                ],
+                "settings": {
+                    "fontStyle": "",
+                }
+            },
+        ]
+    },
+    "python.pythonPath": "C:\\Users\\Mario Moiane\\AppData\\Local\\Programs\\Python\\Python39\\python.exe",
+    "python.formatting.provider": "black",
+    "code-runner.executorMap": {
+        "python": "python -u $fullFileName",
+        "cpp": "cd $dir && clang++ -std=c++20 $fileName -o $fileNameWithoutExt.exe && $dir$fileNameWithoutExt.exe",
+    },
+    "code-runner.clearPreviousOutput": true,
+    "code-runner.showExecutionMessage": false,
+    "terminal.integrated.profiles.windows": {
+        "Ubuntu Bash": {
+            "path": [
+                "${env:windir}\\System32\\bash.exe"
+            ],
+            "args": [],
+            "icon": "terminal-ubuntu"
+        },
+        "PowerShell": {
+            "source": "PowerShell",
+            "icon": "terminal-powershell"
+        },
+        "Command Prompt": {
+            "path": [
+                "${env:windir}\\Sysnative\\cmd.exe",
+                "${env:windir}\\System32\\cmd.exe"
+            ],
+            "args": [
+                "cd",
+                "clear"
+            ],
+            "icon": "terminal-cmd"
+        }
+    },
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "workbench.colorTheme": "Gruvbox Material Dark",
+    "explorer.confirmDragAndDrop": false,
+    "explorer.confirmDelete": false
+}
