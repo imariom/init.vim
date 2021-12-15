@@ -163,7 +163,7 @@ let g:airline#extensions#tabline#fnamemode=':t'
 " Navigate forward, backward and close open buffers
 nmap <leader>1 :bp<CR>
 nmap <leader>2 :bn<CR>
-nmap <C-w> :bd<CR>
+nmap <C-q> :bd<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim-dev icons
