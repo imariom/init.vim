@@ -11,14 +11,21 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General Settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set path+=**                                             " Searches current directory recursively
+syntax enable
 let mapleader=" "
+set path+=**                                             " Searches current directory recursively
 set encoding=UTF-8
 set noerrorbells
 set smartindent
 set number relativenumber
 set nowrap
 set smartcase
+set clipboard=unnamedplus                                " Copy/paste between vim and other programs.
+set expandtab                                            " Use spaces instead of tabs.
+set smarttab                                             " Be smart using tabs ;)
+set shiftwidth=4                                         " One tab == four spaces.
+set tabstop=4                                            " One tab == four spaces.
+set incsearch
 set noswapfile
 set nobackup
 set undodir=~/.vim/undodir
@@ -26,49 +33,44 @@ set undofile
 set scrolloff=10
 set backspace=indent,eol,start
 set ruler
-set incsearch
-set clipboard=unnamedplus                                " Copy/paste between vim and other programs.
-set expandtab                                            " Use spaces instead of tabs.
-set smarttab                                             " Be smart using tabs ;)
-set shiftwidth=4                                         " One tab == four spaces.
-set tabstop=4                                            " One tab == four spaces.
-syntax enable
 
 set colorcolumn=79
 hi ColorColumn ctermbg=0 guibg=darkgrey
+
+" Highlight current line
+set cursorline
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plug for managing plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
-
     Plug 'vim-airline/vim-airline'                       " Statusline support
     Plug 'vim-airline/vim-airline-themes'                " Themes for the statusline
     Plug 'ryanoasis/vim-devicons'                        " Support for filetype glyphs (icons)
     Plug 'ap/vim-css-color'                              " Highlight colors (by name, hex, etc.)
-    Plug 'morhetz/gruvbox'                               " Sorry and im sorry ( i just 💖 it )
     Plug 'NLKNguyen/papercolor-theme'                    " Best color theme for Go development 🤯😭
-    
+
+    Plug 'tpope/vim-commentary'                          " Comment support when editing files
+    Plug 'jiangmiao/auto-pairs'                          " Auto pair parentheses, brackets, quotes, etc.
+
     Plug 'preservim/nerdtree'                            " File explorer
     Plug 'airblade/vim-gitgutter'                        " Git diff markers
     Plug 'Xuyuanp/nerdtree-git-plugin'                   " Git integration for NERDTree
     Plug 'ctrlpvim/ctrlp.vim'                            " Fuzzy file search
 
-    Plug 'tpope/vim-commentary'                          " Comment support when editing files
-    Plug 'jiangmiao/auto-pairs'                          " Auto pair parentheses, brackets, quotes, etc.
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}      " Intellisense support
 
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}      " Inetllisense support
-    Plug 'fatih/vim-go'                                  " Go development plugin for Vim
-
+    Plug 'fatih/vim-go'                                  " Go development support for Vim
 call plug#end()
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Colors and Theming setup
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" enable true colors support
 set termguicolors
 set background=dark
 
-" Colorscheme (PaperColor or gruvbox)
+" Set theme to <PaperColor>
 colorscheme PaperColor
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -101,7 +103,7 @@ map <Leader>th <C-w>t<C-w>K
 map <Leader>tv <C-w>t<C-w>H
 
 " Removes pipes | that act as seperators on splits
-set fillchars+=vert:\ 
+" set fillchars+=vert:\ 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Mouse Scrolling
@@ -121,8 +123,8 @@ set noshowmode
 " air-line
 let g:airline_powerline_fonts = 1
 
-" air-line theme (papercolor or gruvbox)
-let g:airline_theme='papercolor'
+" air-line theme
+let g:airline_theme='gruvbox'
 
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
@@ -168,7 +170,7 @@ nmap <C-q> :bd<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim-dev icons
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set guifont=Hack_Nerd_Font_Mono:12
+set guifont=DroidSansMono_Nerd_Font_Mono:12
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " File Explorer using NERDTree
@@ -178,12 +180,13 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
 
 map <C-n> :NERDTreeToggle<CR>
-let g:NERDTreeDirArrowExpandable = '►'
-let g:NERDTreeDirArrowCollapsible = '▼'
-let NERDTreeShowLineNumbers=1
+
+let g:NERDTreeDirArrowExpandable='+'
+let g:NERDTreeDirArrowCollapsible='~'
+let g:NERDTreeShowLineNumber=1
 let NERDTreeShowHidden=1
-let NERDTreeMinimalUI = 1
-let g:NERDTreeWinSize=30
+let NERDTreeMinimalUI=1
+let g:NERDTreeWinSize=25
 
 let g:NERDTreeGitStatusIndicatorMapCustom = {
     \ "Modified"  : "✹",
@@ -388,22 +391,3 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 "nnoremap <silen disable vim-go :GoDef short cut (gd)
 "nnoremap <silen this is handled by LanguageClient [LC]
 let g:go_def_mapping_enabled = 0
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Yet Another TypeScript Syntax
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:yats_host_keyword = 1
-
-set re=0
-
-" Concealing Characters
-let g:typescript_conceal_function             = "ƒ"
-let g:typescript_conceal_null                 = "ø"
-let g:typescript_conceal_undefined            = "¿"
-let g:typescript_conceal_this                 = "@"
-let g:typescript_conceal_return               = "⇚"
-let g:typescript_conceal_prototype            = "¶"
-let g:typescript_conceal_super                = "Ω"
-
-" Make concealing to be optinal to toggle ON or OFF
-map <leader>l :exec &conceallevel ? "set conceallevel=0" : "set conceallevel=1"<CR>
