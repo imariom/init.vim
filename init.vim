@@ -44,23 +44,44 @@ set cursorline
 " Plug for managing plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
+
+    " Themes and visual
     Plug 'vim-airline/vim-airline'                       " Statusline support
     Plug 'vim-airline/vim-airline-themes'                " Themes for the statusline
     Plug 'ryanoasis/vim-devicons'                        " Support for filetype glyphs (icons)
     Plug 'ap/vim-css-color'                              " Highlight colors (by name, hex, etc.)
-    Plug 'NLKNguyen/papercolor-theme'                    " Best color theme for Go development 🤯😭
+    Plug 'NLKNguyen/papercolor-theme'                    " Best color theme EVER 🤯😭
+    Plug 'Yggdroot/indentLine'                           " Display thin vertical lines at each indent level
 
+    " Enhancement tools
     Plug 'tpope/vim-commentary'                          " Comment support when editing files
     Plug 'jiangmiao/auto-pairs'                          " Auto pair parentheses, brackets, quotes, etc.
 
+    " File explorer (NERDTree)
     Plug 'preservim/nerdtree'                            " File explorer
-    Plug 'airblade/vim-gitgutter'                        " Git diff markers
     Plug 'Xuyuanp/nerdtree-git-plugin'                   " Git integration for NERDTree
-    Plug 'ctrlpvim/ctrlp.vim'                            " Fuzzy file search
 
+    " Fuzzy file search (fzf)
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }  " Install fzf
+    Plug 'junegunn/fzf.vim'                              " fzf pluging for Nvim
+
+    " Terminal on vim
+    Plug 'voldikss/vim-floaterm'                          " Add support to floating terminal
+
+    Plug 'cdelledonne/vim-cmake'
+    if has("nvim")
+        Plug 'antoinemadec/FixCursorHold.nvim'
+    endif
+    
+    " Git integration
+    Plug 'airblade/vim-gitgutter'                        " Git diff markers
+
+    " Language server (Conquer of Completion)
     Plug 'neoclide/coc.nvim', {'branch': 'release'}      " Intellisense support
 
+    " Golang dev support tool
     Plug 'fatih/vim-go'                                  " Go development support for Vim
+
 call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -101,9 +122,6 @@ noremap <silent> <C-Down> :resize -3<CR>
 " Change 2 split windows from vert to horiz or horiz to vert
 map <Leader>th <C-w>t<C-w>K
 map <Leader>tv <C-w>t<C-w>H
-
-" Removes pipes | that act as seperators on splits
-" set fillchars+=vert:\ 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Mouse Scrolling
@@ -183,7 +201,8 @@ map <C-n> :NERDTreeToggle<CR>
 
 let g:NERDTreeDirArrowExpandable='+'
 let g:NERDTreeDirArrowCollapsible='~'
-let g:NERDTreeShowLineNumber=1
+let g:NERDTreeShowLineNumbers=1
+autocmd FileType nerdtree setlocal relativenumber    " Show relative number in NERDTree
 let NERDTreeShowHidden=1
 let NERDTreeMinimalUI=1
 let g:NERDTreeWinSize=25
@@ -200,6 +219,26 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
     \ 'Ignored'   : '☒',
     \ "Unknown"   : "?"
     \ }
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" fzf setup
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <C-p> :Files<Cr>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Floatterm setup
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nmap <C-t> :FloatermNew fff<Cr>
+nmap <leader>tt :FloatermToggle<Cr>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" CMake setup
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:cmake_link_compile_commands = 1
+
+nmap <C-g> :CMakeGenerate<cr>
+nmap <C-i> :CMakeBuild<cr>
+nmap <leader>gt :GTestRunUnderCursor<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Git gutter setup
@@ -231,7 +270,7 @@ set nobackup
 set nowritebackup
 
 " Give more space for displaying messages.
-set cmdheight=2
+set cmdheight=1
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
@@ -391,3 +430,8 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 "nnoremap <silen disable vim-go :GoDef short cut (gd)
 "nnoremap <silen this is handled by LanguageClient [LC]
 let g:go_def_mapping_enabled = 0
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" indentLine setup
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:indentLine_setColors = 0
