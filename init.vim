@@ -2,10 +2,10 @@
 " Welcome to my custom init.vim for 💎 Neovim 💎 (https://www.neovim.io)
 "
 " imariom (a.k.a Mário Alfredo Moiane)
-" help: https://www.imariom.co.mz/init-vim
+" help: https://www.imariom.com/init-vim
 "       https://www.youtube.com/imariom/vim-life
 "
-" Version 0.0.1 created at 03 December 2021 last updated 03 December 2021
+" Version 0.0.1 created at 03 December 2021 last updated 04 July 2022
 "
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -16,121 +16,83 @@ let mapleader=" "
 set path+=**                                             " Searches current directory recursively
 set encoding=UTF-8
 set noerrorbells
+
 set smartindent
 set number relativenumber
 set nowrap
 set smartcase
-set clipboard=unnamedplus                                " Copy/paste between vim and other programs.
+
 set expandtab                                            " Use spaces instead of tabs.
 set smarttab                                             " Be smart using tabs ;)
 set shiftwidth=4                                         " One tab == four spaces.
 set tabstop=4                                            " One tab == four spaces.
-set incsearch
+
 set noswapfile
 set nobackup
 set undodir=~/.vim/undodir
 set undofile
+set clipboard=unnamedplus                                " Copy/paste between vim and other programs.
+
+set incsearch
 set scrolloff=10
 set backspace=indent,eol,start
-set ruler
 
+set cursorline                                           " Highlight current line
 set colorcolumn=79
-hi ColorColumn ctermbg=0 guibg=darkgrey
-
-" Highlight current line
-set cursorline
+hi ColorColumn ctermbg=0 guibg=darkgray
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plug for managing plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
-
     " Themes and visual
+    Plug 'nanotech/jellybeans.vim'                       " Awesome yet beatifull colorcheme
     Plug 'vim-airline/vim-airline'                       " Statusline support
     Plug 'vim-airline/vim-airline-themes'                " Themes for the statusline
     Plug 'ryanoasis/vim-devicons'                        " Support for filetype glyphs (icons)
-    Plug 'ap/vim-css-color'                              " Highlight colors (by name, hex, etc.)
-    Plug 'NLKNguyen/papercolor-theme'                    " Best color theme EVER 🤯😭
-    Plug 'Yggdroot/indentLine'                           " Display thin vertical lines at each indent level
 
     " Enhancement tools
     Plug 'tpope/vim-commentary'                          " Comment support when editing files
+    Plug 'Yggdroot/indentLine'                           " Show verical indentline
     Plug 'jiangmiao/auto-pairs'                          " Auto pair parentheses, brackets, quotes, etc.
+    Plug 'SirVer/ultisnips'                              " Ultimate snippets in nvim
+    Plug 'honza/vim-snippets'                            " Snippets are separated from the engine.
+    Plug 'voldikss/vim-floaterm'                         " Add support to floating terminal
 
-    " File explorer (NERDTree)
+    " File explorer
     Plug 'preservim/nerdtree'                            " File explorer
-    Plug 'Xuyuanp/nerdtree-git-plugin'                   " Git integration for NERDTree
-
-    " Fuzzy file search (fzf)
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }  " Install fzf
-    Plug 'junegunn/fzf.vim'                              " fzf pluging for Nvim
+    Plug 'junegunn/fzf.vim'                              " Fuzzy file search (fzf) pluging for Nvim
 
-    " Terminal on vim
-    Plug 'voldikss/vim-floaterm'                          " Add support to floating terminal
+    " Git integration
+    Plug 'Xuyuanp/nerdtree-git-plugin'                   " Git integration for NERDTree
+    Plug 'airblade/vim-gitgutter'                        " Git diff markers
 
-    Plug 'cdelledonne/vim-cmake'
+    " Language server
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}      " Intellisense support
+
+    " CMake support
+    Plug 'cdelledonne/vim-cmake'                         " CMake support for C++ development
     if has("nvim")
         Plug 'antoinemadec/FixCursorHold.nvim'
     endif
-    
-    " Git integration
-    Plug 'airblade/vim-gitgutter'                        " Git diff markers
 
-    " Language server (Conquer of Completion)
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}      " Intellisense support
-
-    " Golang dev support tool
+    " Golang
     Plug 'fatih/vim-go'                                  " Go development support for Vim
-
 call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Colors and Theming setup
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" enable true colors support
+" Enable true colors support
 set termguicolors
 set background=dark
 
-" Set theme to <PaperColor>
-colorscheme PaperColor
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Disable arrow keys
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-noremap <Up> <NOP>
-noremap <Down> <NOP>
-noremap <Left> <NOP>
-noremap <Right> <NOP>
+" Set theme to <jellybeans>
+colorscheme jellybeans
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Splits and Tabbed Files
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set splitbelow splitright
-
-" Remap splits navigation to just CTRL + hjkl
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-
-" Make adjusing split sizes a bit more friendly
-noremap <silent> <C-Left> :vertical resize +3<CR>
-noremap <silent> <C-Right> :vertical resize -3<CR>
-noremap <silent> <C-Up> :resize +3<CR>
-noremap <silent> <C-Down> :resize -3<CR>
-
-" Change 2 split windows from vert to horiz or horiz to vert
-map <Leader>th <C-w>t<C-w>K
-map <Leader>tv <C-w>t<C-w>H
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Mouse Scrolling
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set mouse=nicr
-set mouse=a
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" vim-airline and Tabs
+" vim-airline and buffers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Always show statusline
 set laststatus=2
@@ -138,57 +100,65 @@ set laststatus=2
 " Uncomment to prevent non-normal modes showing in powerline and below powerline.
 set noshowmode
 
-" air-line
 let g:airline_powerline_fonts = 1
+let g:airline_theme='PaperColor'
 
-" air-line theme
-let g:airline_theme='gruvbox'
-
+" airline symbols
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
 
-" unicode symbols
-let g:airline_left_sep = '»'
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '«'
-let g:airline_right_sep = '◀'
-let g:airline_symbols.linenr = '␊'
-let g:airline_symbols.linenr = '␤'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.paste = 'Þ'
-let g:airline_symbols.paste = '∥'
-let g:airline_symbols.whitespace = 'Ξ'
-
-" airline symbols
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
+let g:airline_left_sep = '' " or ''
+" let g:airline_left_sep = ''
+" let g:airline_left_alt_sep = ''
+let g:airline_right_sep =  ''
+" let g:airline_right_sep =  ''
+" let g:airline_right_alt_sep = ''
 let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
 " Show buffers currently open on top of the window
-let g:airline#extensions#tabline#enabled=1
+let g:airline#extensions#tabline#enabled = 1
 
 " Path formatter that airline should use
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 
 " Only show the buffer name
-let g:airline#extensions#tabline#fnamemode=':t'
+let g:airline#extensions#tabline#fnamemode = ':t'
 
-" Navigate forward, backward and close open buffers
+" Navigate forward <CTRL + 2> and backward <CTRL + 1> between abuffers
 nmap <leader>1 :bp<CR>
 nmap <leader>2 :bn<CR>
+
+" Close currently open buffer <CTRL + q>
 nmap <C-q> :bd<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Vim-dev icons
+" Vim-dev icons my default font
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set guifont=DroidSansMono_Nerd_Font_Mono:12
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" indentLine setup
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:indentLine_setColors = 0
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" ultisnips setuf
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:UltiSnipsExpandTrigger="<S-tab>"
+let g:UltiSnipsJumpForwardTrigger="<C-b>"
+let g:UltiSnipsJumpBackwardTrigger="<C-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Floating terminal setup
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nmap <C-t> :FloatermNew fff<Cr> " Note: require 'fff' installed
+nmap <leader>tt :FloatermToggle<Cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " File Explorer using NERDTree
@@ -226,21 +196,6 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
 nnoremap <C-p> :Files<Cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Floatterm setup
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap <C-t> :FloatermNew fff<Cr>
-nmap <leader>tt :FloatermToggle<Cr>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" CMake setup
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:cmake_link_compile_commands = 1
-
-nmap <C-g> :CMakeGenerate<cr>
-nmap <C-i> :CMakeBuild<cr>
-nmap <leader>gt :GTestRunUnderCursor<cr>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Git gutter setup
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:gitgutter_sign_added = '✚'
@@ -250,10 +205,13 @@ let g:gitgutter_sign_removed_first_line = '-'
 let g:gitgutter_sign_modified_removed = '-'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Go definition and go info setup
+" CMake setup
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:go_def_mode='gopls'
-let g:go_info_mode='gopls'
+let g:cmake_link_compile_commands = 1
+
+nmap <C-g> :CMakeGenerate<cr>
+nmap <C-i> :CMakeBuild<cr>
+nmap <leader>gt :GTestRunUnderCursor<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " coc.nvim default settings
@@ -431,7 +389,43 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 "nnoremap <silen this is handled by LanguageClient [LC]
 let g:go_def_mapping_enabled = 0
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" indentLine setup
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:indentLine_setColors = 0
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Go definition and go info setup
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Disable arrow keys
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+noremap <Up> <NOP>
+noremap <Down> <NOP>
+noremap <Left> <NOP>
+noremap <Right> <NOP>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Splits and Tabbed Files
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set splitbelow splitright
+
+" Remap splits navigation to just CTRL + hjkl
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" Make adjusing split sizes a bit more friendly
+noremap <silent> <C-Left> :vertical resize +3<CR>
+noremap <silent> <C-Right> :vertical resize -3<CR>
+noremap <silent> <C-Up> :resize +3<CR>
+noremap <silent> <C-Down> :resize -3<CR>
+
+" Change 2 split windows from vert to horiz or horiz to vert
+map <Leader>th <C-w>t<C-w>K
+map <Leader>tv <C-w>t<C-w>H
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Mouse Scrolling
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set mouse=nicr
+set mouse=a
